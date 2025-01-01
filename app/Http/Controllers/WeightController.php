@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Weight;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\RedirectResponse;
 
 class WeightController extends Controller
 {
@@ -15,7 +16,10 @@ class WeightController extends Controller
     public function index() : View
     {
         return view('weights.index', [
-            'weights' => Weight::with('user')->orderBy('date', 'desc')->paginate(4),
+            'weights' => Weight::with('user')
+                ->orderBy('date', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate(4),
         ]);
     }
 
@@ -69,8 +73,12 @@ class WeightController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Weight $weight)
+    public function destroy(Weight $weight): RedirectResponse
     {
-        //
+        Gate::authorize('delete', $weight);
+ 
+        $weight->delete();
+ 
+        return redirect(route('weights.index'));
     }
 }
