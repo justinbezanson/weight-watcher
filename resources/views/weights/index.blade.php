@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-        <fieldset class="border border-gray-200 rounded-md shadow-sm p-4">
+        <fieldset class="border border-gray-200 rounded-md shadow-sm p-4 bg-white">
             <legend class="text-lg font-medium text-gray-900">
                 {{ __('Add Weight') }}
             </legend>
@@ -8,7 +8,7 @@
             <form method="POST" action="{{ route('weights.store') }}">
                 @csrf
 
-                <div class="mb-4">
+                <div class="mb-2">
                     <label for="date" class="block text-md font-bold text-gray-700">
                         {{ __('Date') }}
                     </label>
@@ -22,7 +22,7 @@
                     <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-2">
                     <label for="weight" class="block text-md font-bold text-gray-700">
                         {{ __('Weight') }}
                     </label>
@@ -36,14 +36,14 @@
                 </div>    
 
                 <div>
-                    <x-primary-button class="mt-4">{{ __('Add Weight') }}</x-primary-button>
+                    <x-primary-button class="mt-2">{{ __('Add Weight') }}</x-primary-button>
                 </div>
             </form>
         </fieldset>
     </div>
 
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-       <fieldset class="border border-gray-200 rounded-md shadow-sm p-4">
+       <fieldset class="border border-gray-200 rounded-md shadow-sm p-4  pt-0 bg-white">
             <legend class="text-lg font-medium text-gray-900">
                 {{ __('Weights') }}
             </legend>
@@ -60,10 +60,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($weights as $weight)
-                        <tr>
+                    @foreach ($weights as $index =>$weight)
+                        <tr<?php if ($index % 2 === 0) echo ' class="bg-gray-50"'; ?>>
                             <td class="px-4 py-2 text-gray-500 whitespace-nowrap">
-                                {{ $weight->date->format('Y-m-d') }}
+                                {{ $weight->date }}
                             </td>
                             <td class="px-4 py-2 text-gray-500 whitespace-nowrap">
                                 {{ $weight->weight }}
@@ -72,6 +72,10 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <div class="mt-2">
+                {{ $weights->onEachSide(5)->links() }}
+            </div>
        </fieldset>
     </div>
 </x-app-layout>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Weight;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -14,7 +15,7 @@ class WeightController extends Controller
     public function index() : View
     {
         return view('weights.index', [
-            'weights' => Weight::all(),
+            'weights' => Weight::with('user')->orderBy('date', 'desc')->paginate(4),
         ]);
     }
 
@@ -31,7 +32,14 @@ class WeightController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'weight' => 'required|numeric',
+        ]);
+ 
+        $request->user()->weights()->create($validated);
+ 
+        return redirect(route('weights.index'));
     }
 
     /**

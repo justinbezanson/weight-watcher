@@ -10,4 +10,9 @@ class Weight extends Model
         'date',
         'weight',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
