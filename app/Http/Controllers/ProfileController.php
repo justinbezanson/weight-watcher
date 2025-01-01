@@ -37,6 +37,15 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
+    public function pounds(Request $request): RedirectResponse
+    {
+        $request->user()->lbs = !empty($request->lbs);
+
+        $request->user()->save();
+
+        return Redirect::route('weights.index');
+    }
+
     /**
      * Delete the user's account.
      */
