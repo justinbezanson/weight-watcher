@@ -20,102 +20,103 @@ class DatabaseSeeder extends Seeder
             'name' => 'Justin',
             'email' => 'justinbezanson+weightwatcher@gmail.com',
             'password' => bcrypt('password'),
+            'lbs' => false,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-01',
-            'weight' => 275,
+            'weight' => 125,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-02',
-            'weight' => 274.6,
+            'weight' => 124.6,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-03',
-            'weight' => 274.2,
+            'weight' => 124.2,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-04',
-            'weight' => 273.9,
+            'weight' => 123.9,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-05',
-            'weight' => 273.6,
+            'weight' => 123.6,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-06',
-            'weight' => 273.2,
+            'weight' => 123.2,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-07',
-            'weight' => 273,
+            'weight' => 123,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-08',
-            'weight' => 272.7,
+            'weight' => 122.7,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-09',
-            'weight' => 272.5,
+            'weight' => 122.5,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-10',
-            'weight' => 272.4,
+            'weight' => 122.4,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-11',
-            'weight' => 273.1,
+            'weight' => 123.1,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-12',
-            'weight' => 273.4,
+            'weight' => 123.4,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-13',
-            'weight' => 273,
+            'weight' => 123,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-14',
-            'weight' => 272.7,
+            'weight' => 122.7,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-15',
-            'weight' => 272.4,
+            'weight' => 122.4,
         ]);
 
         Weight::factory()->create([
             'user_id' => 1,
             'date' => '2024-12-16',
-            'weight' => 272,
+            'weight' => 122,
         ]);
     }
 }

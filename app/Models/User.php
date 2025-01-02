@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Weight::class);
     }
+
+    public function getUnitOfMeasure() : string
+    {
+        return $this->attributes['lbs'] ? 'lbs' : 'kg';
+    }
 }

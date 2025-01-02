@@ -18,4 +18,13 @@ class Weight extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getWeight() : float
+    {
+        if($this->user->lbs) {
+            return round($this->attributes['weight'] * 2.20462, 2);
+        }
+
+        return round($this->attributes['weight'], 2);
+    }
 }

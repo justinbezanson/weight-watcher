@@ -48,7 +48,7 @@
 
                 <div class="mb-2">
                     <label for="weight" class="block text-md font-bold text-gray-700">
-                        {{ __('Weight') }}
+                        {{ __('Weight') . ' (' . Auth::user()->getUnitOfMeasure() . ')' }}
                     </label>
                     <input
                         type="text"
@@ -60,7 +60,7 @@
                 </div>    
 
                 <div>
-                    <x-primary-button class="mt-2">{{ __('Add Weight') }}</x-primary-button>
+                    <x-primary-button class="mt-2">{{ __('Add Weight') . ' (' . Auth::user()->getUnitOfMeasure() . ')' }}</x-primary-button>
                 </div>
             </form>
         </fieldset>
@@ -91,7 +91,7 @@
                                 {{ $weight->date }}
                             </td>
                             <td class="px-4 py-2 text-gray-500 whitespace-nowrap">
-                                {{ $weight->weight }}
+                                {{ $weight->getWeight() }} {{ Auth::user()->getUnitOfMeasure() }}
                             </td>
                             <td>
                                 @if ($weight->user->is(auth()->user()))

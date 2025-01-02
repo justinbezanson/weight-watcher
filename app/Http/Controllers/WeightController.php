@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Weight;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -40,6 +41,10 @@ class WeightController extends Controller
             'date' => 'required|date',
             'weight' => 'required|numeric',
         ]);
+
+        if(Auth::user()->lbs) {
+            $validated['weight'] = $validated['weight'] * 0.45359237;
+        }
  
         $request->user()->weights()->create($validated);
  
