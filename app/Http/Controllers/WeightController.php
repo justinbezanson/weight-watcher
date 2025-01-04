@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Weight;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class WeightController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index() : View
+    public function index(): View
     {
         return view('weights.index', [
             'weights' => Weight::with('user')
@@ -42,12 +42,12 @@ class WeightController extends Controller
             'weight' => 'required|numeric',
         ]);
 
-        if(Auth::user()->lbs) {
+        if (Auth::user()->lbs) {
             $validated['weight'] = $validated['weight'] * 0.45359237;
         }
- 
+
         $request->user()->weights()->create($validated);
- 
+
         return redirect(route('weights.index'));
     }
 
@@ -81,9 +81,9 @@ class WeightController extends Controller
     public function destroy(Weight $weight): RedirectResponse
     {
         Gate::authorize('delete', $weight);
- 
+
         $weight->delete();
- 
+
         return redirect(route('weights.index'));
     }
 }

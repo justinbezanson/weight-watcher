@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Weight extends Model
 {
@@ -19,9 +19,9 @@ class Weight extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getWeight() : float
+    public function getWeight(): float
     {
-        if($this->user->lbs) {
+        if ($this->user->lbs) {
             return round($this->attributes['weight'] * 2.20462, 2);
         }
 

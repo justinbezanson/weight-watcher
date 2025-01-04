@@ -39,7 +39,7 @@ class ProfileController extends Controller
 
     public function pounds(Request $request): RedirectResponse
     {
-        $request->user()->lbs = !empty($request->lbs);
+        $request->user()->lbs = ! empty($request->lbs);
 
         $request->user()->save();
 
