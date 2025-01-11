@@ -17,6 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/pounds', [ProfileController::class, 'pounds'])->name('profile.pounds');
+
+    Route::get('/weights/chart', [WeightController::class, 'chart'])->name('weights.chart');
 });
 
 Route::resource('weights', WeightController::class)

@@ -15,6 +15,11 @@ class Weight extends Model
         'weight',
     ];
 
+    public static function convertToLbs(float $weight): float
+    {
+        return round($weight * 2.20462, 2);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

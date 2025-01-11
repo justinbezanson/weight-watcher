@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-2xl mx-auto p-4 pb-1 pt-0 sm:p-6 lg:p-8 lg:pb-1">
+    <div class="max-w-2xl mx-auto p-4 pb-0 pt-0 sm:p-6 lg:p-8 lg:pb-0">
         
         <div class="text-right mb-2 mt-3">
             <form method="POST" action="{{ route('profile.pounds') }}">
@@ -24,7 +24,7 @@
         </div>
   
 
-        <fieldset class="border border-gray-200 rounded-md shadow-sm p-4 bg-white">
+        <fieldset class="border border-gray-200 rounded-md shadow-sm p-4 pt-0 bg-white">
             <legend class="text-lg font-medium text-gray-900">
                 {{ __('Add Weight') }}
             </legend>
@@ -64,9 +64,13 @@
                 </div>
             </form>
         </fieldset>
+
+        <div class="text-right mb-0 mt-3">
+            <a class="text-blue-500" href="{{ route('weights.chart') }}">{{ __('See Chart') }}</a>
+        </div>
     </div>
 
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 pt-0 pb-0">
+    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 lg:pt-0 sm:pt-0 pt-0 pb-0">
        <fieldset class="border border-gray-200 rounded-md shadow-sm p-4 pt-0 bg-white">
             <legend class="text-lg font-medium text-gray-900">
                 {{ __('Weights') }}

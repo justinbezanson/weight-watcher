@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Weight;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class WeightController extends Controller
 {
@@ -30,6 +31,37 @@ class WeightController extends Controller
     public function create()
     {
         //
+    }
+    
+    public function chart()
+    {
+        $titleUnit = 'kg';
+        if (Auth::user()->lbs) {
+            $titleUnit = 'lbs';
+        }
+
+        $chart_options = [
+            'chart_title' => 'Weight Chart (' . $titleUnit . ')',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Weight',
+            'group_by_field' => 'date',
+            'group_by_period' => 'day',
+            'aggregate_function' => 'sum',
+            'aggregate_field' => 'weight',
+            'aggregate_transform' => function($value) {
+                if (Auth::user()->lbs) {
+                    return Weight::convertToLbs($value);
+                }
+
+                return $value;
+            },
+            'group_by_field_format' => 'Y-m-d',
+            'chart_type' => 'line',
+        ];
+    
+        $chart = new LaravelChart($chart_options);
+        
+        return view('weights.chart', compact('chart'));
     }
 
     /**
