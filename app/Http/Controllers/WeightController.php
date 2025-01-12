@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Weight;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
@@ -33,16 +34,53 @@ class WeightController extends Controller
         //
     }
     
-    public function chart()
+    public function chart(Request $request)
     {
         $titleUnit = 'kg';
         if (Auth::user()->lbs) {
             $titleUnit = 'lbs';
         }
 
+        $start = '0001-01-01';
+        $end = '9999-12-31';
+
+        $range = $request->get('filter_range') ?? '7d';
+
+        switch ($range) {
+            case '7d':
+                $start = Carbon::now()->subDays(7)->format('Y-m-d');
+                $end = Carbon::now()->format('Y-m-d');
+                break;
+            case '1m':
+                $start = Carbon::now()->subMonth()->format('Y-m-d');
+                $end = Carbon::now()->format('Y-m-d');
+                break;
+            case '3m':
+                $start = Carbon::now()->subMonths(3)->format('Y-m-d');
+                $end = Carbon::now()->format('Y-m-d');
+                break;
+            case '6m':
+                $start = Carbon::now()->subMonths(6)->format('Y-m-d');
+                $end = Carbon::now()->format('Y-m-d');
+                break;
+            case '1y':
+                $start = Carbon::now()->subYear()->format('Y-m-d');
+                $end = Carbon::now()->format('Y-m-d');
+                break;
+            case '3y':
+                $start = Carbon::now()->subYears(3)->format('Y-m-d');
+                $end = Carbon::now()->format('Y-m-d');
+                break;
+            case '5y':
+                $start = Carbon::now()->subYears(5)->format('Y-m-d');
+                $end = Carbon::now()->format('Y-m-d');
+                break;
+        }
+
         $chart_options = [
             'chart_title' => 'Weight Chart (' . $titleUnit . ')',
             'report_type' => 'group_by_date',
+            'filter_field' => 'date',
             'model' => 'App\Models\Weight',
             'group_by_field' => 'date',
             'group_by_period' => 'day',
@@ -57,11 +95,16 @@ class WeightController extends Controller
             },
             'group_by_field_format' => 'Y-m-d',
             'chart_type' => 'line',
+            'range_date_start' => $start . ' 00:00:00',
+            'range_date_end' => $end . ' 23:59:59',
         ];
     
         $chart = new LaravelChart($chart_options);
         
-        return view('weights.chart', compact('chart'));
+        return view('weights.chart', [
+            'chart' => $chart,
+            'filter_range' => $range,
+        ]);
     }
 
     /**

@@ -43,7 +43,9 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('weights.index');
+        $route = $request->referrer === 'chart' ? 'weights.chart' : 'weights.index';
+
+        return Redirect::route($route);
     }
 
     /**
