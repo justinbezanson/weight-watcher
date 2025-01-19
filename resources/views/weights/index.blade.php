@@ -122,7 +122,7 @@
             </table>
 
             <div class="mt-2">
-                {{ $weights->onEachSide(5)->links() }}
+                {{ $weights->onEachSide(0)->links() }}
             </div>
        </fieldset>
     </div>
