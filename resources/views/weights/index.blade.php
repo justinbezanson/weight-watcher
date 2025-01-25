@@ -90,7 +90,7 @@
                 </thead>
                 <tbody>
                     @foreach ($weights as $index =>$weight)
-                        <tr<?php if ($index % 2 === 0) echo ' class="bg-gray-50"'; ?>>
+                        <tr<?php if ($index % 2 === 0) echo ' style="background-color: #e8f3ee;"'; ?>>
                             <td class="px-4 py-2 text-gray-500 whitespace-nowrap">
                                 {{ $weight->date }}
                             </td>
