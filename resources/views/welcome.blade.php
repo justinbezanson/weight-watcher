@@ -23,12 +23,12 @@
         <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50"  style="background-color: #afc5c3;">
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                    <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
-                        <div class="flex lg:justify-center lg:col-start-2">
+                    <header class="grid grid-cols-1 items-center gap-2 py-10 lg:grid-cols-3">
+                        <div class="flex justify-center lg:col-start-2">
                             <img src="/images/logo.png" alt="Weight Watcher Logo" />
                         </div>
                         @if (Route::has('login'))
-                            <nav class="-mx-3 flex flex-1 justify-end">
+                            <nav class="-mx-3 flex flex-1 justify-center lg:justify-end">
                                 @auth
                                     <a
                                         href="{{ url('/dashboard') }}"
@@ -59,10 +59,10 @@
                         @endif
                     </header>
 
-                    <main class="mt-6 w-1/2 mx-auto">
+                    <main class="mt-6 md:w-1/2 mx-auto">
                         <div class="flex">
                             <div class="w-64 flex-auto">
-                                <h1  style="color: #56626a;" class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-5xl mb-8">
+                                <h1  style="color: #56626a;" class="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-5xl mb-8">
                                     Losing weight is hard enough, let us make it easier
                                 </h1>
                                 <h2 class="mb-8">
