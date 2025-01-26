@@ -59,7 +59,7 @@
                         @endif
                     </header>
 
-                    <main class="mt-6 md:w-1/2 mx-auto">
+                    <main class="mt-6 lg:w-1/2 mx-auto">
                         <div class="flex">
                             <div class="w-64 flex-auto">
                                 <h1  style="color: #56626a;" class="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-5xl mb-8">
