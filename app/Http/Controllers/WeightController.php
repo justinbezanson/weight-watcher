@@ -97,6 +97,7 @@ class WeightController extends Controller
             'chart_type' => 'line',
             'range_date_start' => $start . ' 00:00:00',
             'range_date_end' => $end . ' 23:59:59',
+            'begin_at_zero' => false,
         ];
     
         $chart = new LaravelChart($chart_options);

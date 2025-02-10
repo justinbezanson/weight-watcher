@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             Weight::factory()->create([
                 'user_id' => 1,
                 'date' => $fiveYearsAgo->format('Y-m-d'),
-                'weight' => rand(100, 200),
+                'weight' => rand(75, 110),
             ]);
 
             $fiveYearsAgo->addDay();
