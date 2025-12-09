@@ -44,7 +44,7 @@ class WeightController extends Controller
         $start = '0001-01-01';
         $end = '9999-12-31';
 
-        $range = $request->get('filter_range') ?? '7d';
+        $range = $request->get('filter_range') ?? '3m';
 
         switch ($range) {
             case '7d':
