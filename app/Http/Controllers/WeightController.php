@@ -26,6 +26,16 @@ class WeightController extends Controller
         ]);
     }
 
+    public function checkin(): View
+    {
+        return view('weights.checkin', [
+            'weights' => Weight::with('user')
+                ->orderBy('date', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate(4),
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Weight;
+use App\Models\MeasurementType;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -36,5 +36,20 @@ class DatabaseSeeder extends Seeder
 
             $fiveYearsAgo->addDay();
         }
+
+        MeasurementType::factory()->create([
+            'user_id' => 1,
+            'name' => 'Neck',
+        ]);
+
+        MeasurementType::factory()->create([
+            'user_id' => 1,
+            'name' => 'Waist',
+        ]);
+
+        MeasurementType::factory()->create([
+            'user_id' => 1,
+            'name' => 'Hips',
+        ]);
     }
 }
