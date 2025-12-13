@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\MeasurementType;
 use App\Models\User;
 use App\Models\Weight;
-use App\Models\MeasurementType;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class DatabaseSeeder extends Seeder
 {

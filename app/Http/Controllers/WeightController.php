@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Weight;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class WeightController extends Controller
@@ -43,7 +43,7 @@ class WeightController extends Controller
     {
         //
     }
-    
+
     public function chart(Request $request)
     {
         $titleUnit = 'kg';
@@ -88,7 +88,7 @@ class WeightController extends Controller
         }
 
         $chart_options = [
-            'chart_title' => 'Weight Chart (' . $titleUnit . ')',
+            'chart_title' => 'Weight Chart ('.$titleUnit.')',
             'report_type' => 'group_by_date',
             'filter_field' => 'date',
             'model' => 'App\Models\Weight',
@@ -96,7 +96,7 @@ class WeightController extends Controller
             'group_by_period' => 'day',
             'aggregate_function' => 'sum',
             'aggregate_field' => 'weight',
-            'aggregate_transform' => function($value) {
+            'aggregate_transform' => function ($value) {
                 if (Auth::user()->lbs) {
                     return Weight::convertToLbs($value);
                 }
@@ -105,13 +105,13 @@ class WeightController extends Controller
             },
             'group_by_field_format' => 'Y-m-d',
             'chart_type' => 'line',
-            'range_date_start' => $start . ' 00:00:00',
-            'range_date_end' => $end . ' 23:59:59',
+            'range_date_start' => $start.' 00:00:00',
+            'range_date_end' => $end.' 23:59:59',
             'begin_at_zero' => false,
         ];
-    
+
         $chart = new LaravelChart($chart_options);
-        
+
         return view('weights.chart', [
             'chart' => $chart,
             'filter_range' => $range,

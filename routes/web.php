@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MeasurementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WeightController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/weights/chart', [WeightController::class, 'chart'])->name('weights.chart');
     Route::get('/checkin', [WeightController::class, 'checkin'])->name('weights.checkin');
+
+    Route::get('/measurements', [MeasurementController::class, 'index'])->name('measurements.index');
+    Route::post('/measurements/store', [MeasurementController::class, 'store'])->name('measurements.store');
+    Route::delete('/measurements/{measurementType}/destroy', [MeasurementController::class, 'destroy'])->name('measurements.destroy');
 });
 
 Route::resource('weights', WeightController::class)
