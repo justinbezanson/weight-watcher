@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/pounds', [ProfileController::class, 'pounds'])->name('profile.pounds');
 
     Route::get('/weights/chart', [WeightController::class, 'chart'])->name('weights.chart');
+    Route::get('/weights/{type}', [WeightController::class, 'index'])->name('weights.index');
     Route::get('/checkin', [WeightController::class, 'checkin'])->name('weights.checkin');
 
     Route::get('/measurements', [MeasurementController::class, 'index'])->name('measurements.index');

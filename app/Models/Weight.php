@@ -12,6 +12,7 @@ class Weight extends Model
 
     protected $fillable = [
         'date',
+        'type',
         'weight',
     ];
 
@@ -28,9 +29,9 @@ class Weight extends Model
     public function getWeight(): float
     {
         if ($this->user['lbs']) {
-            return round($this->attributes['weight'] * 2.20462, 2);
+            return round($this->attributes['amount'] * 2.20462, 2);
         }
 
-        return round($this->attributes['weight'], 2);
+        return round($this->attributes['amount'], 2);
     }
 }

@@ -26,54 +26,47 @@
 
         <fieldset class="border border-gray-200 rounded-md shadow-sm p-4 pt-0 bg-white">
             <legend class="text-lg font-medium text-gray-900">
-                {{ __('Add Weight') }}
+                {{ __('Filter') }}
             </legend>
 
-            <form method="POST" action="{{ route('weights.store') }}">
-                @csrf
-
+            <form method="GET" action="{{ route('weights.index') }}">
                 <div class="mb-2">
-                    <label for="date" class="block text-md font-bold text-gray-700">
-                        {{ __('Date') }}
+                    <label for="type" class="block text-md font-bold text-gray-700">
+                        {{ __('Type') }}
                     </label>
-                    <input
-                        type="date"
-                        title="{{ __('Select date for weight in') }}"
-                        name="date"
-                        value="{{ old('date', date('Y-m-d')) }}"
+                    
+                    <select
+                        name="type"
                         class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                    />
-                    <x-input-error :messages="$errors->get('date')" class="mt-2" />
+                        onchange="this.form.submit()"
+                    >
+                        <option value="Weight" @if(request()->get('type') == 'Weight') selected @endif>{{ __('Weight') }}</option>
+                        @foreach ($types as $option)
+                            <option value="{{ $option->name }}" @if(request()->get('type') == $option->name) selected @endif>{{ $option->name }}</option>                                
+                        @endforeach
+                    </select>
+
+                    <x-input-error :messages="$errors->get('type')" class="mt-2" />
                 </div>
 
-                <div class="mb-2">
-                    <label for="weight" class="block text-md font-bold text-gray-700">
-                        {{ __('Weight') . ' (' . Auth::user()->getUnitOfMeasure() . ')' }}
-                    </label>
-                    <input
-                        type="text"
-                        title="{{ __('Enter your weight for the selected date') }}"
-                        name="weight"
-                        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                    />
-                    <x-input-error :messages="$errors->get('weight')" class="mt-2" />
-                </div>    
-
                 <div>
-                    <x-primary-button class="mt-2">{{ __('Add Weight') . ' (' . Auth::user()->getUnitOfMeasure() . ')' }}</x-primary-button>
+                    <x-primary-button class="mt-2">{{ __('Filter') }}</x-primary-button>
                 </div>
             </form>
         </fieldset>
-
-        <div class="text-right mb-0 mt-3">
-            <a class="text-blue-500" href="{{ route('weights.chart') }}">{{ __('See Chart') }}</a>
-        </div>
     </div>
 
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 lg:pt-0 sm:pt-0 pt-0 pb-0">
+    @php
+        $unit = Auth::user()->getUnitOfMeasure();
+        if($type !== 'Weight') {
+            $unit = $unit === 'kg' ? 'cm' : 'in';
+        }
+    @endphp
+
+    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 lg:pt-4 sm:pt-2 pt-2 pb-0">
        <fieldset class="border border-gray-200 rounded-md shadow-sm p-4 pt-0 bg-white">
             <legend class="text-lg font-medium text-gray-900">
-                {{ __('Weights') }}
+                {{ $type }}
             </legend>
         
             <table class="min-w-full divide-y divide-gray-200">
@@ -83,7 +76,7 @@
                             {{ __('Date') }}
                         </th>
                         <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            {{ __('Weight') }}
+                            {{ __('Amount') }}
                         </th>
                         <th>
                     </tr>
@@ -95,7 +88,7 @@
                                 {{ $weight->date }}
                             </td>
                             <td class="px-4 py-2 text-gray-500 whitespace-nowrap">
-                                {{ $weight->getWeight() }} {{ Auth::user()->getUnitOfMeasure() }}
+                                {{ $weight->getWeight() }} {{ $unit }}
                             </td>
                             <td>
                                 @if ($weight->user->is(auth()->user()))
@@ -118,6 +111,13 @@
                             </td>
                         </tr>
                     @endforeach
+                    @if(empty($weights->items()))
+                        <tr>
+                            <td class="px-4 py-2 text-gray-500 whitespace-nowrap" colspan="3">
+                                {{ __('No records found.') }}
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 

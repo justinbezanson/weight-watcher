@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MeasurementType;
 use App\Models\Weight;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,10 +17,19 @@ class WeightController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        $type = $request->get('type', 'Weight');
+
+        $types = MeasurementType::where('user_id', Auth::user()->id)
+            ->orderBy('name', 'asc')
+            ->get();
+
         return view('weights.index', [
+            'types' => $types,
+            'type' => $type,
             'weights' => Weight::with('user')
+                ->where('type', $type)
                 ->orderBy('date', 'desc')
                 ->orderBy('created_at', 'desc')
                 ->paginate(4),
