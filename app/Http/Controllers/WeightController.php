@@ -38,7 +38,12 @@ class WeightController extends Controller
 
     public function checkin(): View
     {
+        $types = MeasurementType::where('user_id', Auth::user()->id)
+            ->orderBy('name', 'asc')
+            ->get();
+
         return view('weights.checkin', [
+            'types' => $types,
             'weights' => Weight::with('user')
                 ->orderBy('date', 'desc')
                 ->orderBy('created_at', 'desc')

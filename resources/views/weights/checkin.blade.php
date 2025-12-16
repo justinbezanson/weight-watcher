@@ -26,7 +26,7 @@
 
         <fieldset class="border border-gray-200 rounded-md shadow-sm p-4 pt-0 bg-white">
             <legend class="text-lg font-medium text-gray-900">
-                {{ __('Add Weight') }}
+                {{ __('Check-In') }}
             </legend>
 
             <form method="POST" action="{{ route('weights.store') }}">
@@ -57,7 +57,26 @@
                         class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                     />
                     <x-input-error :messages="$errors->get('weight')" class="mt-2" />
-                </div>    
+                </div>
+
+                @php
+                    $units = Auth::user()->getUnitOfMeasure() === 'kg' ? 'cm' : 'in';
+                @endphp
+
+                @foreach($types as $type)
+                <div class="mb-2">
+                    <label for="{{ $type->name }}" class="block text-md font-bold text-gray-700">
+                        {{ $type->name . ' (' . $units . ')' }}
+                    </label>
+                    <input
+                        type="text"
+                        title="{{ __('Enter your ' . $type->name . ' measurement for the selected date') }}"
+                        name="{{ $type->name }}"
+                        class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    />
+                    <x-input-error :messages="$errors->get($type->name)" class="mt-2" />
+                </div>
+                @endforeach
 
                 <div>
                     <x-primary-button class="mt-2">{{ __('Check-In') }}</x-primary-button>
