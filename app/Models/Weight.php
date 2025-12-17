@@ -13,7 +13,7 @@ class Weight extends Model
     protected $fillable = [
         'date',
         'type',
-        'weight',
+        'amount',
     ];
 
     public static function convertToLbs(float $weight): float
@@ -26,10 +26,12 @@ class Weight extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getWeight(): float
+    public function getWeight($type = 'Weight'): float
     {
+        $multiplier = $type === 'Weight' ? 2.20462 : 2.54;
+
         if ($this->user['lbs']) {
-            return round($this->attributes['amount'] * 2.20462, 2);
+            return round($this->attributes['amount'] * $multiplier, 2);
         }
 
         return round($this->attributes['amount'], 2);

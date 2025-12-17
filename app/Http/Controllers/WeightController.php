@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
@@ -138,18 +139,52 @@ class WeightController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'date' => 'required|date',
-            'weight' => 'required|numeric',
-        ]);
+        // TODO: handle adding measurements for existing date
+        // success message for deleting existing measurements for date
+        DB::transaction(function () use ($request) {
+            $validated = $request->validate([
+                'date' => 'required|date',
+                'weight' => 'required|numeric',
+            ]);
 
-        if (Auth::user()->lbs) {
-            $validated['weight'] = $validated['weight'] * 0.45359237;
-        }
+            if (Auth::user()->lbs) {
+                $validated['weight'] = $validated['weight'] * 0.45359237;
+            }
 
-        $request->user()->weights()->create($validated);
+            $request->user()->weights()->create([
+                'date' => $validated['date'],
+                'type' => 'Weight',
+                'amount' => $validated['weight'],
+            ]);
 
-        return redirect(route('weights.index'));
+            $types = MeasurementType::where('user_id', Auth::user()->id)
+                ->orderBy('name', 'asc')
+                ->get();
+
+            foreach ($types as $type) {
+                if ($request->has($type->name)) {
+                    $measurement = $request->validate([
+                        $type->name => 'nullable|numeric',
+                    ]);
+
+                    if ($measurement[$type->name] === null) {
+                        continue;
+                    }
+
+                    if (Auth::user()->lbs) {
+                        $measurement[$type->name] = $measurement[$type->name] * 0.3937007874;
+                    }
+
+                    $request->user()->weights()->create([
+                        'date' => $validated['date'],
+                        'type' => $type->name,
+                        'amount' => $measurement[$type->name],
+                    ]);
+                }
+            }
+        });
+
+        return redirect()->route('weights.checkin')->with('success', 'Measurements added successfully!');
     }
 
     /**

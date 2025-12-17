@@ -1,5 +1,16 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-4 pb-0 pt-0 sm:p-6 lg:p-8 lg:pb-0">
+        @if (session('success'))
+            <div class="border border-green-400 rounded-md bg-green-100 p-4 mb-4 text-green-700 flex">
+                <div class="flex-[3]">{{ session('success') }}</div>
+
+                <div class="flex-[1] w-1/4 text-right cursor-pointer">
+                    <a href="javascript:void(0);" onclick="event.target.parentElement.parentElement.remove();">
+                        X
+                    </a>
+                </div>
+            </div>
+        @endif
         
         <div class="text-right mb-2 mt-3">
             <form method="POST" action="{{ route('profile.pounds') }}">
