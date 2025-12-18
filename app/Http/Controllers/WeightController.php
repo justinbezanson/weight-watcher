@@ -72,6 +72,12 @@ class WeightController extends Controller
 
         $range = $request->get('filter_range') ?? '3m';
 
+        $type = $request->get('type', 'Weight');
+
+        $types = MeasurementType::where('user_id', Auth::user()->id)
+            ->orderBy('name', 'asc')
+            ->get();
+
         switch ($range) {
             case '7d':
                 $start = Carbon::now()->subDays(7)->format('Y-m-d');
@@ -111,7 +117,7 @@ class WeightController extends Controller
             'group_by_field' => 'date',
             'group_by_period' => 'day',
             'aggregate_function' => 'sum',
-            'aggregate_field' => 'weight',
+            'aggregate_field' => 'amount',
             'aggregate_transform' => function ($value) {
                 if (Auth::user()->lbs) {
                     return Weight::convertToLbs($value);
@@ -124,6 +130,7 @@ class WeightController extends Controller
             'range_date_start' => $start.' 00:00:00',
             'range_date_end' => $end.' 23:59:59',
             'begin_at_zero' => false,
+            'where_raw' => "type = ".DB::connection()->getPdo()->quote($type) . " AND user_id = ".DB::connection()->getPdo()->quote(Auth::user()->id),
         ];
 
         $chart = new LaravelChart($chart_options);
@@ -131,6 +138,8 @@ class WeightController extends Controller
         return view('weights.chart', [
             'chart' => $chart,
             'filter_range' => $range,
+            'type' => $type,
+            'types' => $types,
         ]);
     }
 

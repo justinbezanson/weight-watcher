@@ -19,7 +19,19 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('weights.chart')" :active="request()->routeIs('weights.chart')">
-                        {{ __('Reports') }}
+                        {{ __('Charts') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('measurements.index')" :active="request()->routeIs('measurements.index')">
+                        {{ __('Measurements') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('weights.index')" :active="request()->routeIs('weights.index')">
+                        {{ __('History') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -79,7 +91,19 @@
         </div>
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('weights.chart')" :active="request()->routeIs('weights.chart')">
-                {{ __('Reports') }}
+                {{ __('Charts') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('measurements.index')" :active="request()->routeIs('measurements.index')">
+                {{ __('Measurements') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('weights.index')" :active="request()->routeIs('weights.index')">
+                {{ __('History') }}
             </x-responsive-nav-link>
         </div>
 

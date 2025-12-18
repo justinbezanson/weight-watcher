@@ -94,11 +94,5 @@
                 </div>
             </form>
         </fieldset>
-
-        <div class="text-right mb-0 mt-3">
-            <a class="text-blue-500" href="{{ route('weights.index') }}">{{ __('Modify Past Measurements') }}</a> |
-            <a class="text-blue-500" href="{{ route('measurements.index') }}">{{ __('Track Other Measurements') }}</a> |
-            <a class="text-blue-500" href="{{ route('weights.chart') }}">{{ __('See Chart') }}</a>
-        </div>
     </div>
 </x-app-layout>

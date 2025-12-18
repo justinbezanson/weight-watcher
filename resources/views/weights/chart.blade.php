@@ -9,6 +9,18 @@
 
                 <form id="filter_form" method="GET" action="{{ route('weights.chart') }}" style="display:inline;">
                     <span>
+                        <select
+                            name="type"
+                            class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                            onchange="this.form.submit()"
+                        >
+                            <option value="Weight" @if(request()->get('type') == 'Weight') selected @endif>{{ __('Weight') }}</option>
+                            @foreach ($types as $option)
+                                <option value="{{ $option->name }}" @if(request()->get('type') == $option->name) selected @endif>{{ $option->name }}</option>                                
+                            @endforeach
+                        </select>
+                    </span>
+                    <span>
                         <select name="filter_range" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                             <option value="7d">{{ __('Last 7 Days') }}</option>
                             <option value="1m">{{ __('Last 1 Month') }}</option>
